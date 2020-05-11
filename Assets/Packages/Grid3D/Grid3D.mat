@@ -63,9 +63,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GridInterval: 1
-    - _LineLength: 0.2
-    - _LineWidth: 0.01
+    - _GridInterval: 10
+    - _LineLength: 1
+    - _LineWidth: 0.1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -78,4 +78,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GridCount: {r: 100, g: 100, b: 100, a: 0}
+    - _GridCount: {r: 50, g: 50, b: 50, a: 0}

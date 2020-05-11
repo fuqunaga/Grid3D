@@ -7,6 +7,9 @@
         _GridInterval("GridInterval", Float) = 10
         _LineWidth("LineWidth", Float) = 0.01
         _LineLength("LineLength", Float) = 0.2
+
+        [Enum(UnityEngine.Rendering.CompareFunction)]
+        _ZTest("ZTest", Float) = 4              // LEqual
     }
 
     SubShader
@@ -17,7 +20,7 @@
         Pass
         {
             Cull Off
-            ZTest Always
+            ZTest [_ZTest]
 
             CGPROGRAM
             #pragma vertex vert
