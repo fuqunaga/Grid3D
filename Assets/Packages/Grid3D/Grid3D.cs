@@ -20,18 +20,20 @@ public class Grid3D : MonoBehaviour
 
     private void OnRenderObject()
     {
+        if ((Camera.current.cullingMask & (1 << gameObject.layer)) != 0)
+        {
+            var lineVertexCount = 6 * 2;
+            var starVertexCount = lineVertexCount * 3;
 
-        var lineVertexCount = 6 * 2;
-        var starVertexCount = lineVertexCount * 3;
+            var vertexCount = gridCount.x * gridCount.y * gridCount.z * starVertexCount;
 
-        var vertexCount = gridCount.x * gridCount.y * gridCount.z * starVertexCount;
+            material.SetVector(ShaderParam.GridCount, (Vector3)gridCount);
+            material.SetFloat(ShaderParam.GridInterval, gridInterval);
+            material.SetFloat(ShaderParam.LineWidth, gridWidth);
+            material.SetFloat(ShaderParam.LineLength, gridSize);
 
-        material.SetVector(ShaderParam.GridCount, (Vector3)gridCount);
-        material.SetFloat(ShaderParam.GridInterval, gridInterval);
-        material.SetFloat(ShaderParam.LineWidth, gridWidth);
-        material.SetFloat(ShaderParam.LineLength, gridSize);
-
-        material.SetPass(0);
-        Graphics.DrawProceduralNow(MeshTopology.Triangles, vertexCount);
+            material.SetPass(0);
+            Graphics.DrawProceduralNow(MeshTopology.Triangles, vertexCount);
+        }
     }
 }
