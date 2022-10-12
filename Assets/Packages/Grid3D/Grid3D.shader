@@ -1,4 +1,6 @@
-﻿Shader "Custom/Grid3D"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/Grid3D"
 {
     Properties
     {
@@ -28,6 +30,7 @@
 
             #include "UnityCG.cginc"
 
+            float4x4 _ObjectToWorldMatrix;
             float4 _GridCount;
             float _GridInterval;
             float _LineWidth;
@@ -82,9 +85,10 @@
 
                 float3 origin = _GridCount * -0.5;
 
-                float3 pos = (xyz_idx + origin) * _GridInterval + quad;
+                float3 local_pos = (xyz_idx + origin) * _GridInterval + quad;
+                float3 pos = mul(_ObjectToWorldMatrix, float4(local_pos,1));
 
-                return mul(UNITY_MATRIX_VP, float4(pos,1));
+                return UnityObjectToClipPos(float4(pos,1));
             }
 
             fixed4 _Color;

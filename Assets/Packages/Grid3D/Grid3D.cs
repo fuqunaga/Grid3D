@@ -5,6 +5,7 @@ public class Grid3D : MonoBehaviour
 {
     public static class ShaderParam
     {
+        public static readonly int ObjectToWorldMatrix = Shader.PropertyToID("_ObjectToWorldMatrix");
         public static readonly int GridCount = Shader.PropertyToID("_GridCount");
         public static readonly int GridInterval = Shader.PropertyToID("_GridInterval");
         public static readonly int LineWidth = Shader.PropertyToID("_LineWidth");
@@ -27,6 +28,7 @@ public class Grid3D : MonoBehaviour
 
             var vertexCount = gridCount.x * gridCount.y * gridCount.z * starVertexCount;
 
+            material.SetMatrix(ShaderParam.ObjectToWorldMatrix, transform.localToWorldMatrix);
             material.SetVector(ShaderParam.GridCount, (Vector3)gridCount);
             material.SetFloat(ShaderParam.GridInterval, gridInterval);
             material.SetFloat(ShaderParam.LineWidth, gridWidth);
