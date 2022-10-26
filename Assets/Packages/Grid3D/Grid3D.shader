@@ -4,6 +4,7 @@ Shader "Custom/Grid3D"
 {
     Properties
     {
+        _CenterPosition("CenterPositioN", Float) = (0,0,0,0)
         _Color("Color", color) = (1,1,1,1)
         _GridCount("GridCount", Vector) = (100,100,100,0)
         _GridInterval("GridInterval", Float) = 10
@@ -30,7 +31,7 @@ Shader "Custom/Grid3D"
 
             #include "UnityCG.cginc"
 
-            float4x4 _ObjectToWorldMatrix;
+            float3 _CenterPosition;
             float4 _GridCount;
             float _GridInterval;
             float _LineWidth;
@@ -83,10 +84,10 @@ Shader "Custom/Grid3D"
                     star_idx % gridCount.z
                 );
 
-                float3 origin = _GridCount * -0.5;
+                float3 center = floor(_CenterPosition / _GridInterval);
+                float3 origin = _GridCount * -0.5 + center;
 
-                float3 local_pos = (xyz_idx + origin) * _GridInterval + quad;
-                float3 pos = mul(_ObjectToWorldMatrix, float4(local_pos,1));
+                float3 pos = (xyz_idx + origin) * _GridInterval + quad;
 
                 return UnityObjectToClipPos(float4(pos,1));
             }
